@@ -1,4 +1,3 @@
-import createDateString from "@/utils/createDateString";
 import { NextRequest, NextResponse } from "next/server";
 
 const convertDate = (date: string) => {
