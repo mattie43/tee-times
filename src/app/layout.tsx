@@ -1,6 +1,7 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Suspense } from "react";
 import "./globals.css";
 
 const queryClient = new QueryClient();
@@ -15,7 +16,7 @@ export default function layout({
       <title>Tee Time Scraper</title>
       <body>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
         </QueryClientProvider>
       </body>
     </html>
