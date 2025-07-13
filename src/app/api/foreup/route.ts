@@ -8,6 +8,8 @@ const convertDate = (date: string) => {
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const date = searchParams.get("date") || "";
+  const booking_class = searchParams.get("booking_class") || "";
+  const schedule_id = searchParams.get("schedule_id") || "";
 
   const url = `
   https://foreupsoftware.com/index.php/api/booking/times
@@ -15,8 +17,8 @@ export async function GET(req: NextRequest) {
   &date=${convertDate(date)}
   &holes=all
   &players=0
-  &booking_class=3686
-  &schedule_id=3782
+  &booking_class=${booking_class}
+  &schedule_id=${schedule_id}
   &specials_only=0
   &api_key=no_limits`
     .trim()

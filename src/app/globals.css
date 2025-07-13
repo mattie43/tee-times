@@ -3,11 +3,13 @@
 
 :root {
   --background: #17171b;
-  --foreground: #7cb4ca;
+  --foreground: #eeeeee;
+  --faded: var(--color-gray-400);
   --pastel-red: #ffb3ba;
   --pastel-orange: #ffdfba;
   --pastel-yellow: #ffffba;
   --pastel-green: #baffc9;
+  --pastel-blue: #7cb4ca;
   font-family: "Overpass Mono", monospace;
   font-size: 1.2rem;
 }
@@ -32,8 +34,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 hr {
-  border-color: var(--foreground);
-  border-width: 1px;
+  border-color: var(--faded);
+  border-bottom-width: 1px;
+  border-top-width: 0;
   width: 100%;
 }
 
@@ -44,4 +47,5 @@ hr {
   --color-pastel-orange: var(--pastel-orange);
   --color-pastel-yellow: var(--pastel-yellow);
   --color-pastel-green: var(--pastel-green);
+  --color-pastel-blue: var(--pastel-blue);
 }

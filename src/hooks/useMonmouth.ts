@@ -1,5 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import useDateParam from "@/hooks/useDateParam";
+import { MONMOUTH_COURSES } from "@/constants/courses";
+import useCourseFilters from "./useCourseFilters";
 
 export type TAPITeeTime = {
   time: string;
@@ -75,38 +77,56 @@ export type TTeeTime = {
   available_spots: number;
   course_id: number;
   course_name: string;
-  green_fee: number;
   id: string;
   time: string;
+  book_url: string;
+  booking_class: string;
 };
 
 export default function useMonmouth() {
   const [date] = useDateParam();
-  const url = `/api/foreup?date=${date}`;
+  const [filters] = useCourseFilters();
+  const bookUrl = "https://foreupsoftware.com/index.php/booking/20290#teetimes";
 
-  const queryFn = async () => {
-    const res = await fetch(url);
+  const multiQueryFn = async (course: any) => {
+    const multiUrl = `/api/foreup?date=${date}&booking_class=${course.booking_class}&schedule_id=${course.schedule_id}`;
+    const res = await fetch(multiUrl);
     const data = await res.json();
     const updatedData = data.map((teeTime: TAPITeeTime) => {
       return {
         available_spots: teeTime.available_spots,
         course_id: teeTime.course_id,
-        course_name: teeTime.course_name,
-        green_fee: teeTime.green_fee,
-        id: `${teeTime.course_id}-${teeTime.time}`,
+        course_name: course.name,
+        id: `${teeTime.booking_class_id}-${teeTime.time}`,
+        booking_class: course.booking_class,
         time: teeTime.time,
+        book_url: bookUrl,
       };
     });
     return updatedData;
   };
 
-  const { data, isLoading } = useQuery<TTeeTime[]>({
-    queryKey: ["monmouth", date],
-    queryFn,
-    staleTime: Infinity,
+  const results = useQueries({
+    queries: MONMOUTH_COURSES.map((course) => ({
+      queryKey: ["monmouth", course.booking_class, date],
+      queryFn: () => multiQueryFn(course),
+      staleTime: Infinity,
+    })),
   });
 
-  return { data, isLoading };
+  const isLoading = results.some((result) => result.isLoading);
+  const data: TTeeTime[] = isLoading
+    ? []
+    : results
+        .map((result) => result.data)
+        .flat()
+        .sort((a, b) => a.time.localeCompare(b.time));
+  const filteredData =
+    filters.length > 0
+      ? data.filter((teeTime) => filters.includes(`${teeTime.booking_class}`))
+      : data;
+
+  return { data: filteredData, isLoading };
 }
 
 /*
