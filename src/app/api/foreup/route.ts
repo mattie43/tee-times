@@ -9,8 +9,6 @@ export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const date = searchParams.get("date") || "";
 
-  // How does `schedule_id` change?
-  // Does `booking_class` mean course id?
   const url = `
   https://foreupsoftware.com/index.php/api/booking/times
   ?time=all

@@ -12,14 +12,12 @@ export default function DatePicker() {
   };
 
   return (
-    <>
-      <input
-        name="date-picker"
-        type="date"
-        value={date}
-        onChange={handleChange}
-        className="border-2 border-foreground rounded-md p-1"
-      />
-    </>
+    <input
+      name="date-picker"
+      type="date"
+      value={date}
+      onChange={handleChange}
+      className="border border-foreground rounded-sm p-1 cursor-text"
+    />
   );
 }

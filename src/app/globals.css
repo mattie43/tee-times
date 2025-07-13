@@ -2,8 +2,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300..700&display=swap");
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #17171b;
+  --foreground: #7cb4ca;
+  --pastel-red: #ffb3ba;
+  --pastel-orange: #ffdfba;
+  --pastel-yellow: #ffffba;
+  --pastel-green: #baffc9;
   font-family: "Overpass Mono", monospace;
   font-size: 1.2rem;
 }
@@ -21,22 +25,23 @@ body {
   color: var(--foreground);
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  transform: translateY(-2px);
+  filter: brightness(0) invert(1);
+}
+
+hr {
+  border-color: var(--foreground);
+  border-width: 1px;
+  width: 100%;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-  transform: translateY(-2px);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: brightness(0) invert(1);
-  }
+  --color-pastel-red: var(--pastel-red);
+  --color-pastel-orange: var(--pastel-orange);
+  --color-pastel-yellow: var(--pastel-yellow);
+  --color-pastel-green: var(--pastel-green);
 }

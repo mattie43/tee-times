@@ -1,20 +1,21 @@
 "use client";
 
 import useMonmouth from "@/hooks/useMonmouth";
-import DatePicker from "@/components/DatePicker";
 import FilterPanel from "@/components/FilterPanel";
 import Card from "@/components/Card";
 
 export default function page() {
-  const { data } = useMonmouth();
+  const { data, isLoading } = useMonmouth();
 
   return (
-    <div className="flex gap-4 p-2">
+    <div className="flex flex-1 gap-4">
       <FilterPanel />
-      <DatePicker />
-      {data?.map((teeTime: any) => (
-        <Card key={teeTime.id} teeTime={teeTime} />
-      ))}
+      <div className="flex flex-1 flex-wrap gap-2 justify-center p-4">
+        {isLoading && <span>Loading...</span>}
+        {data?.map((teeTime: any) => (
+          <Card key={teeTime.id} teeTime={teeTime} />
+        ))}
+      </div>
     </div>
   );
 }

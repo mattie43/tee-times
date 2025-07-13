@@ -100,14 +100,13 @@ export default function useMonmouth() {
     return updatedData;
   };
 
-  const { data } = useQuery<TTeeTime[]>({
+  const { data, isLoading } = useQuery<TTeeTime[]>({
     queryKey: ["monmouth", date],
     queryFn,
-    placeholderData: [],
     staleTime: Infinity,
   });
 
-  return { data };
+  return { data, isLoading };
 }
 
 /*
